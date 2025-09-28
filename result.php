@@ -13,11 +13,11 @@ $bill = buildBill($_POST);
 </head>
 
 <body>
+  <!-- ===== HEADER ===== -->
   <header class="site-header">
     <img src="<?= htmlspecialchars($co['logo']) ?>" alt="Logo" class="logo">
-    <div>
+    <div class="header-text">
       <h1><?= htmlspecialchars($co['name']) ?></h1>
-      <small><?= htmlspecialchars($co['addr']) ?> · <?= htmlspecialchars($co['phone']) ?> · <?= htmlspecialchars($co['email']) ?></small>
     </div>
   </header>
 
@@ -106,7 +106,7 @@ $bill = buildBill($_POST);
 
         <div class="actions">
           <button onclick="window.print()" class="btn-ghost">Cetak Resit</button>
-          <a href="index.php" class="btn-primary">← Buat Resit Baharu</a>
+          <a href="index.php" class="btn-primary">Kembali</a>
         </div>
       </section>
     <?php endif; ?>

@@ -16,11 +16,6 @@ $co = companyInfo(); ?>
     <img src="<?= htmlspecialchars($co['logo']) ?>" alt="Logo" class="logo">
     <div class="header-text">
       <h1><?= htmlspecialchars($co['name']) ?></h1>
-      <p class="tagline">
-        <?= htmlspecialchars($co['addr']) ?> &nbsp;|&nbsp;
-        <?= htmlspecialchars($co['phone']) ?> &nbsp;|&nbsp;
-        <?= htmlspecialchars($co['email']) ?>
-      </p>
     </div>
   </header>
 
@@ -109,12 +104,8 @@ $co = companyInfo(); ?>
     </form>
   </main>
 
-  <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
-    <p>&copy; <?= date('Y') ?> <?= htmlspecialchars($co['name']) ?> — Semua Hak Cipta Terpelihara.</p>
-    <p class="foot-contact">
-      <?= htmlspecialchars($co['addr']) ?> &bull; <?= htmlspecialchars($co['phone']) ?> &bull; <?= htmlspecialchars($co['email']) ?>
-    </p>
+    © <?= date('Y') ?> <?= htmlspecialchars($co['name']) ?>. Semua Hak Cipta Terpelihara.
   </footer>
 
   <script>

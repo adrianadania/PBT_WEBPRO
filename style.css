@@ -88,7 +88,7 @@ body {
   text-align: center;
   z-index: 1000;
   border-top: 4px solid var(--brand);
-  line-height: 1.4;
+  line-height: 1.0;
   font-size: 0.9rem;
 }
 
@@ -275,15 +275,23 @@ input[type="number"] {
   flex-wrap: wrap;
 }
 
-.btn-primary {
-  background: var(--brand);
-  color: #fff;
-  border: none;
+.btn-primary,
+.btn-ghost {
+  flex: 1; /* Pastikan kedua-dua butang mengisi ruang yang ada */
   padding: 10px 20px;
+  font-size: 18px;
   border-radius: 12px;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--brand);
+  text-align: center;
+  color: #fff;
+  border: none;
 }
 
 .btn-primary:hover {
@@ -293,11 +301,7 @@ input[type="number"] {
 .btn-ghost {
   background: #fff;
   border: 1px solid var(--ring);
-  padding: 10px 20px;
-  border-radius: 12px;
-  font-weight: 700;
   color: var(--ink);
-  cursor: pointer;
 }
 
 .btn-ghost:hover {
