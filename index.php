@@ -21,44 +21,46 @@ $co = companyInfo(); ?>
 
   <!-- ===== CONTENT: FORM GRID ===== -->
   <main>
-    <!-- Tambahkan class full-layout & order-form pada form -->
     <form action="result.php" method="post" class="full-layout order-form" novalidate>
 
       <!-- LEFT : BORANG PELANGGAN -->
       <section class="left">
         <fieldset>
-          <legend>Maklumat Pelanggan</legend>
+          <legend>Customer Rental Form</legend>
           <div class="grid2">
-            <label>Nama
+            <label>Name
               <input type="text" name="nama" required>
             </label>
-            <label>No Telefon
-              <input type="text" name="telefon" pattern="\d{10}" maxlength="10" placeholder="10 digit" required>
-              <small class="hint">Mesti 10 digit (contoh: 0123456789)</small>
+            <label>Phone Number
+              <input type="text" name="telefon" pattern="\d{10}" maxlength="10" required>
+              <small class="hint">(example: 0123456789)</small>
             </label>
             <label>Email
               <input type="email" name="email" required>
             </label>
-            <label>Alamat
+            <label>Address
               <input type="text" name="alamat" required>
             </label>
-            <label>Bandar
+            <label>City
               <input type="text" name="bandar" required>
             </label>
-            <label>Negeri
+            <label>State
               <input type="text" name="negeri" required>
             </label>
-            <label>Poskod
+            <label>Poscode
               <input type="text" name="poskod" pattern="\d{5}" maxlength="5" required>
             </label>
-            <label>Tarikh Sewa
-              <input type="date" name="tarikh" min="<?= date('Y-m-d') ?>" required>
+
+            <!-- Rental Date with dd-mm-yyyy format -->
+            <label>Rental Date
+              <input type="date" name="tarikh" required>
             </label>
-            <label>Tempoh Sewa (hari)
+
+            <label>Rental Duration (days)
               <input type="number" name="days" min="1" value="1" required>
             </label>
-            <label>Nota (opsyenal)
-              <input type="text" name="nota" placeholder="Keperluan khas…">
+            <label>Notes
+              <input type="text" name="nota" >
             </label>
           </div>
         </fieldset>
@@ -66,7 +68,7 @@ $co = companyInfo(); ?>
 
       <!-- RIGHT : SENARAI PAKEJ -->
       <section class="right">
-        <h2>Pakej Utama <span class="pill">Pilih 1</span></h2>
+        <h2>Main Packages <span class="pill">Select 1</span></h2>
         <div class="cards">
           <?php foreach (mainPackages() as $p): ?>
             <label class="card">
@@ -80,7 +82,7 @@ $co = companyInfo(); ?>
           <?php endforeach; ?>
         </div>
 
-        <h2>Pakej Tambahan <span class="pill">Pilih sekurang-kurangnya 2</span></h2>
+        <h2>Add-On Packages <span class="pill">Select at least 2</span></h2>
         <div class="cards">
           <?php foreach (addOnPackages() as $p): ?>
             <label class="card">
@@ -97,7 +99,7 @@ $co = companyInfo(); ?>
 
       <!-- BUTTONS DI BAWAH KESELURUHAN GRID -->
       <div class="button-container">
-        <button type="submit" class="btn-primary">Hantar Tempahan</button>
+        <button type="submit" class="btn-primary">Submit Booking</button>
         <button type="reset" class="btn-ghost">Reset</button>
       </div>
 
@@ -121,6 +123,7 @@ $co = companyInfo(); ?>
         e.preventDefault();
       }
     });
+    
   </script>
 </body>
 
