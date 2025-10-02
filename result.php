@@ -1,16 +1,18 @@
-<?php require_once 'function.php';
-$co = companyInfo(); ?>
+<?php
+require_once 'function.php';
+$co = companyInfo();
+$bill = buildBill($_POST);
+?>
 <!DOCTYPE html>
 <html lang="ms">
 
 <head>
   <meta charset="UTF-8">
-  <title>Tempahan Pakej Transportation</title>
+  <title>Booking Receipt</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
   <!-- ===== HEADER ===== -->
   <header class="site-header">
     <img src="<?= htmlspecialchars($co['logo']) ?>" alt="Logo" class="logo">
@@ -19,112 +21,100 @@ $co = companyInfo(); ?>
     </div>
   </header>
 
-  <!-- ===== CONTENT: FORM GRID ===== -->
-  <main>
-    <form action="result.php" method="post" class="full-layout order-form" novalidate>
-
-      <!-- LEFT : BORANG PELANGGAN -->
-      <section class="left">
-        <fieldset>
-          <legend>Customer Rental Form</legend>
-          <div class="grid2">
-            <label>Name
-              <input type="text" name="nama" required>
-            </label>
-            <label>Phone Number
-              <input type="text" name="telefon" pattern="\d{10}" maxlength="10" required>
-              <small class="hint">(example: 0123456789)</small>
-            </label>
-            <label>Email
-              <input type="email" name="email" required>
-            </label>
-            <label>Address
-              <input type="text" name="alamat" required>
-            </label>
-            <label>City
-              <input type="text" name="bandar" required>
-            </label>
-            <label>State
-              <input type="text" name="negeri" required>
-            </label>
-            <label>Poscode
-              <input type="text" name="poskod" pattern="\d{5}" maxlength="5" required>
-            </label>
-
-            <!-- Rental Date with dd-mm-yyyy format -->
-            <label>Rental Date
-              <input type="date" name="tarikh"  required>
-            </label>
-
-            <label>Rental Duration (days)
-              <input type="number" name="days" min="1" value="1" required>
-            </label>
-            <label>Notes
-              <input type="text" name="nota" >
-            </label>
-          </div>
-        </fieldset>
-      </section>
-
-      <!-- RIGHT : SENARAI PAKEJ -->
-      <section class="right">
-        <h2>Main Packages <span class="pill">Select 1</span></h2>
-        <div class="cards">
-          <?php foreach (mainPackages() as $p): ?>
-            <label class="card">
-              <img src="<?= htmlspecialchars($p['img']) ?>" alt="">
-              <div class="card-body">
-                <div class="title"><?= htmlspecialchars($p['name']) ?></div>
-                <div class="price"><?= money($p['price']) ?><?= $p['unit'] ?></div>
-                <input type="radio" name="main" value="<?= $p['id'] ?>" required>
-              </div>
-            </label>
-          <?php endforeach; ?>
-        </div>
-
-        <h2>Add-On Packages <span class="pill">Select at least 2</span></h2>
-        <div class="cards">
-          <?php foreach (addOnPackages() as $p): ?>
-            <label class="card">
-              <img src="<?= htmlspecialchars($p['img']) ?>" alt="">
-              <div class="card-body">
-                <div class="title"><?= htmlspecialchars($p['name']) ?></div>
-                <div class="price"><?= money($p['price']) ?><?= $p['unit'] ?></div>
-                <input type="checkbox" name="addons[]" value="<?= $p['id'] ?>">
-              </div>
-            </label>
-          <?php endforeach; ?>
-        </div>
-      </section>
-
-      <!-- BUTTONS DI BAWAH KESELURUHAN GRID -->
-      <div class="button-container">
-        <button type="submit" class="btn-primary">Submit Booking</button>
-        <button type="reset" class="btn-ghost">Reset</button>
+  <main class="container">
+    <?php if (!$bill['ok']): ?>
+      <div class="alert error">
+        <h3> Error </h3>
+        <ul><?php foreach ($bill['errors'] as $e) echo "<li>" . htmlspecialchars($e) . "</li>"; ?></ul>
+        <a class="btn-primary" href="index.php">← Back To Booking Form</a>
       </div>
+    <?php else: ?>
+      <?php $c = $bill['cust'];
+      $calc = $bill['calc']; ?>
+      <section class="receipt">
+        <div class="receipt-head">
+          <div>
+            <h2>Booking Receipt</h2>
+            <div>Receipt No: <strong><?= $bill['receipt'] ?></strong></div>
+            <div>Print Date: <?= date('d/m/Y H:i') ?></div>
+          </div>
+        </div>
 
-    </form>
+        <h3>Customer Information</h3>
+        <div class="grid2 small">
+          <div><strong>Name:</strong> <?= htmlspecialchars($c['nama']) ?></div>
+          <div><strong>Phone Number:</strong> <?= htmlspecialchars($c['telefon']) ?></div>
+          <div><strong>Email:</strong> <?= htmlspecialchars($c['email']) ?></div>
+          <div><strong>Address:</strong> <?= htmlspecialchars($c['alamat']) ?>, <?= htmlspecialchars($c['bandar']) ?>, <?= htmlspecialchars($c['negeri']) ?> <?= htmlspecialchars($c['poskod']) ?></div>
+          <div><strong>Rental Date:</strong> <?= date('d/m/Y') ?></div>
+          <div><strong>Rental Duration:</strong> <?= $c['days'] ?> days</div>
+          <?php if ($c['nota']) { ?><div style="grid-column:1/-1;"><strong>Notes:</strong> <?= htmlspecialchars($c['nota']) ?></div><?php } ?>
+        </div>
+
+        <h3>Package Summary</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><?= $bill['main']['name'] ?> (main)</td>
+              <td><?= money($bill['main']['price']) ?>/day</td>
+              <td><?= $c['days'] ?> hari</td>
+              <td><?= money($calc['mainCost']) ?></td>
+            </tr>
+            <?php foreach ($bill['addons'] as $a): ?>
+              <tr>
+                <td><?= $a['name'] ?> (add-on)</td>
+                <td><?= money($a['price']) ?><?= $a['unit'] ?></td>
+                <td>
+                  <?php if ($a['id'] === 'petrol') {
+                    echo '1';
+                  } else {
+                    echo $c['days'] . ' hari';
+                  } ?>
+                </td>
+                <td>
+                  <?php
+                  $line = ($a['id'] === 'petrol') ? $a['price'] : $a['price'] * $c['days'];
+                  echo money($line);
+                  ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="3" class="right">SubTotal</th>
+              <th><?= money($calc['subtotal']) ?></th>
+            </tr>
+            <tr>
+              <th colspan="3" class="right">Tax (6%)</th>
+              <th><?= money($calc['tax']) ?></th>
+            </tr>
+            <tr>
+              <th colspan="3" class="right">Total Amount Due</th>
+              <th><?= money($calc['total']) ?></th>
+            </tr>
+          </tfoot>
+        </table>
+
+        <div class="actions">
+          <button onclick="window.print()" class="btn-ghost">Print Receipt</button>
+          <a href="index.php" class="btn-primary">Back</a>
+        </div>
+      </section>
+    <?php endif; ?>
   </main>
 
   <footer class="site-footer">
     © <?= date('Y') ?> <?= htmlspecialchars($co['name']) ?>. Semua Hak Cipta Terpelihara.
   </footer>
-
-  <script>
-    document.querySelector('.order-form').addEventListener('submit', function(e) {
-      const addons = [...document.querySelectorAll('input[name="addons[]"]:checked')];
-      if (addons.length < 2) {
-        alert('Sila pilih sekurang-kurangnya DUA (2) pakej tambahan.');
-        e.preventDefault();
-      }
-      const tel = document.querySelector('input[name="telefon"]');
-      if (tel && !/^\d{10}$/.test(tel.value)) {
-        alert('No telefon mesti 10 digit.');
-        e.preventDefault();
-      }
-    });
-    
-  </script>
 </body>
 
 </html>

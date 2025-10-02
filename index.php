@@ -7,7 +7,7 @@ $co = companyInfo(); ?>
   <meta charset="UTF-8">
   <title>Tempahan Pakej Transportation</title>
   <link rel="stylesheet" href="style.css">
-</head>
+</head> 
 
 <body>
 
