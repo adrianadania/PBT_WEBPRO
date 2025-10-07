@@ -1,21 +1,13 @@
 /* ---------- COLOR PALETTE ---------- */
 :root {
   --bg: #f7f3ef;
-  /* light nude background */
   --card: #fff;
-  /* card & form panels */
   --ink: #3b302b;
-  /* dark cocoa text */
   --muted: #7a6d66;
-  /* secondary text */
   --brand: #b38a6d;
-  /* medium mocha buttons */
   --brand-d: #9a7358;
-  /* darker hover */
   --accent: #d9c4b5;
-  /* soft beige accents */
   --ring: #e5ddd6;
-  /* borders */
 }
 
 /* ---------- BASE ---------- */
@@ -23,22 +15,19 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--ink);
   background: var(--bg);
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 /* ---------- HEADER ---------- */
 .site-header {
   position: fixed;
-  /* Fixed positioning */
   top: 0;
-  /* At the top */
   left: 0;
   right: 0;
   background: var(--brand);
@@ -46,9 +35,8 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 28px 24px;
+  padding: 26px 24px;
   z-index: 1000;
-  /* Ensure it stays on top */
   border-bottom: 4px solid var(--brand-d);
 }
 
@@ -64,89 +52,60 @@ body {
 .header-text h1 {
   margin: 0;
   font-size: 2rem;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   font-weight: 800;
 }
 
 .header-text .tagline {
   margin-top: 6px;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1rem;
   color: #f7f3ef;
 }
 
 /* ---------- FOOTER ---------- */
 .site-footer {
   position: sticky;
-  /* Changed to sticky */
   bottom: 0;
   left: 0;
   right: 0;
   background: var(--brand-d);
   color: #fff;
-  padding: 16px 20px;
+  padding: 14px 20px;
   text-align: center;
   z-index: 1000;
   border-top: 4px solid var(--brand);
-  line-height: 1.0;
   font-size: 0.9rem;
-}
-
-
-
-.site-footer .foot-contact {
-  font-size: 1rem;
-  margin-top: 6px;
-  color: #f4eee9;
+  line-height: 1.3;
 }
 
 /* ---------- CONTENT AREA ---------- */
 main {
   margin-top: 140px;
-  /* Space for fixed header */
-  margin-bottom: 0px;
-  /* Space for fixed footer */
-  padding: 20px;
+  padding: 0;
+  width: 100%;
 }
 
 /* ---------- 2-COLUMN FULL LAYOUT ---------- */
 .full-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* kiri 50% / kanan 50% */
-  height: auto;
-  gap: 20px;
+  width: 100%;
 }
 
-.left,
-.right {
-  overflow-y: auto;
+.left, .right {
   padding: 24px;
   background: var(--bg);
 }
 
-@media(max-width:900px) {
+@media (max-width: 900px) {
   .full-layout {
     grid-template-columns: 1fr;
-    height: auto;
   }
 }
 
-/* ---------- TEXT ELEMENTS ---------- */
-h1 {
-  margin: 0;
-  font-size: 24px;
-}
-
-h2 {
-  margin: 22px 0 10px;
-  color: var(--brand-d);
-}
-
-h3 {
-  margin: 18px 0 8px;
-  color: var(--brand-d);
-}
+/* ---------- HEADINGS ---------- */
+h1 { margin: 0; font-size: 24px; }
+h2, h3 { color: var(--brand-d); margin: 18px 0 10px; }
 
 .pill {
   display: inline-block;
@@ -164,7 +123,7 @@ h3 {
   border: 1px solid var(--ring);
   border-radius: 12px;
   background: var(--card);
-  padding: 16px;
+  padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -177,7 +136,7 @@ h3 {
 .grid2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 16px 20px;
 }
 
 label {
@@ -187,34 +146,78 @@ label {
   gap: 6px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="date"],
-input[type="number"] {
+/* ---------- INPUT FIELD WIDTHS ---------- */
+.order-form input[type="text"],
+.order-form input[type="email"],
+.order-form input[type="date"],
+.order-form input[type="number"] {
   padding: 10px;
   border: 1px solid var(--ring);
   border-radius: 10px;
   background: #fdfaf7;
   font-weight: 500;
+  width: auto;
+  display: inline-block;
+  transition: border 0.2s;
+}
+
+.order-form input:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+
+/* Nama, email, alamat panjang */
+input[name="nama"],
+input[name="email"],
+input[name="alamat"] {
+  width: 340px;
+}
+
+/* Bandar dan negeri sederhana */
+input[name="bandar"],
+input[name="negeri"] {
+  width: 220px;
+}
+
+/* Telefon, poskod, dan hari pendek */
+input[name="telefon"],
+input[name="poskod"],
+input[name="days"] {
+  width: 130px;
+  text-align: center;
+}
+
+/* Tarikh sederhana */
+input[name="tarikh"] {
+  width: 180px;
+}
+
+/* Nota panjang sederhana */
+input[name="nota"] {
+  width: 300px;
 }
 
 .hint {
   font-weight: 500;
   color: var(--muted);
   margin-top: -4px;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
-@media(max-width:900px) {
+/* Responsive – semua input penuh di mobile */
+@media (max-width: 900px) {
   .grid2 {
     grid-template-columns: 1fr;
+  }
+  .order-form input {
+    width: 100% !important;
   }
 }
 
 /* ---------- CARDS ---------- */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
 }
 
@@ -224,25 +227,19 @@ input[type="number"] {
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
-  transition: transform .2s, box-shadow .2s;
-  width: 100%;
-  /* Ensure cards are appropriately sized */
-  margin-bottom: 10px;
-
-
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, .1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  display: block;
 }
 
 .card-body {
@@ -254,7 +251,6 @@ input[type="number"] {
 
 .card .title {
   font-weight: 700;
-  line-height: 1.2;
 }
 
 .card .price {
@@ -268,43 +264,46 @@ input[type="number"] {
 }
 
 /* ---------- BUTTONS ---------- */
-.actions {
-  margin: 18px 0;
+.button-container, .actions {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  margin: 20px 0;
 }
 
 .btn-primary,
-.btn-ghost {
-  flex: 1; /* Pastikan kedua-dua butang mengisi ruang yang ada */
-  padding: 10px 20px;
+.btn-ghost,
+button {
+  padding: 12px 24px;
   font-size: 18px;
   border-radius: 12px;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.btn-primary {
+.btn-primary, button[type="submit"] {
   background: var(--brand);
-  text-align: center;
   color: #fff;
   border: none;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+button[type="submit"]:hover {
   background: var(--brand-d);
 }
 
-.btn-ghost {
+.btn-ghost, button[type="reset"] {
   background: #fff;
   border: 1px solid var(--ring);
   color: var(--ink);
 }
 
-.btn-ghost:hover {
+.btn-ghost:hover,
+button[type="reset"]:hover {
   background: var(--accent);
 }
 
@@ -315,11 +314,11 @@ input[type="number"] {
   background: var(--card);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 12px;
 }
 
-.table th,
-.table td {
+.table th, .table td {
   padding: 10px;
   border-bottom: 1px solid var(--ring);
   text-align: left;
@@ -327,10 +326,12 @@ input[type="number"] {
 
 .table thead th {
   background: var(--accent);
+  font-weight: 700;
 }
 
 .table tfoot th {
   background: #f0e6dc;
+  text-align: right;
 }
 
 /* ---------- ALERT ---------- */
@@ -340,61 +341,26 @@ input[type="number"] {
   border-radius: 12px;
   padding: 16px;
   color: #7a3b25;
+  margin-bottom: 20px;
 }
 
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  /* Susun butang kiri dan kanan */
-  width: 200%;
-  /* Penuhkan lebar halaman */
-}
-
-button {
-  flex: 1;
-  /* Buat setiap butang mengisi ruang yang ada */
-  padding: 40px;
-  font-size: 18px;
-  border-radius: 5px;
-  background-color: #8c4f2d;
-  color: white;
-  border: none;
-  margin: 0 10px;
-  /* Jarak antara butang */
-}
-
-button[type="reset"] {
-  background-color: #ccc;
-}
-
-button[type="submit"] {
-  background-color: #8c4f2d;
-}
-
-button:hover {
-  background-color: #6a3c1e;
-}
-
-
-
-
-
-
-.pakej-tambahan {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  /* Adjust space between items */
-  justify-content: space-between;
-  /* Align items to take full width */
-  margin-bottom: 0;
-  /* Remove unnecessary bottom margin */
-}
-
-
-@media(max-width: 768px) {
-  .pakej-tambahan {
+/* ---------- RESPONSIVE FIXES ---------- */
+@media (max-width: 768px) {
+  .site-header {
     flex-direction: column;
-    /* Stack items vertically on smaller screens */
+    text-align: center;
+  }
+
+  .site-header .logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .actions, .button-container {
+    flex-direction: column;
+  }
+
+  .btn-primary, .btn-ghost {
+    width: 100%;
   }
 }

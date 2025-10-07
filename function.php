@@ -9,7 +9,7 @@ function companyInfo(): array
         'phone'  => '03-98765432',
         'email'  => 'doubleatransports@gmail.com',
     ];
-}
+} 
 
 /* ---------- DATA: PACKAGES ---------- */
 function mainPackages(): array
